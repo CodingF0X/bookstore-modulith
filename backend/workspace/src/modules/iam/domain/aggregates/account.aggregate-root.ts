@@ -1,3 +1,4 @@
+import { InvalidRoleAssignmentException } from '../exceptions/role-assign.exception';
 import { AccountId } from '../value-objects/account-id.vo';
 import { EmailAddress } from '../value-objects/email-address.vo';
 import { PasswordHash } from '../value-objects/password-hash.vo';
@@ -54,8 +55,7 @@ export class Account {
   //-- Behaviors --//
 
   public assignRole(role: Role): void {
-    if (!this._isActive)
-      throw new Error('Cannot assign role to a deactivated account.');
+    if (!this._isActive) throw new InvalidRoleAssignmentException();
 
     const alreadyHasRole = this._roles.some((r) => r.roleName === role);
     if (!alreadyHasRole) {

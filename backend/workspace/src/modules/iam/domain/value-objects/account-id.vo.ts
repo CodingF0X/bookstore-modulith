@@ -1,4 +1,5 @@
 import { validate as isUUID } from 'uuid';
+import { InvalidIdException } from '../exceptions/invalid-id.exception';
 
 export class AccountId {
   private readonly value: string;
@@ -8,8 +9,8 @@ export class AccountId {
   }
 
   public static create(id: string): AccountId {
-    if (!isUUID) {
-      throw new Error('Invalid Account ID format. Must be a UUID.');
+    if (!isUUID(id)) {
+      throw new InvalidIdException();
     }
 
     return new AccountId(id);

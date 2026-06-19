@@ -1,3 +1,5 @@
+import { InvalidEmailException } from '../exceptions/invalid-email.exception';
+
 export class EmailAddress {
   private readonly value: string;
 
@@ -9,7 +11,7 @@ export class EmailAddress {
     const normalizeEmail = rawEmail.trim().toLowerCase();
 
     if (!this.isValid(normalizeEmail)) {
-      throw new Error(`Invalid email address format: ${rawEmail}`);
+      throw new InvalidEmailException();
     }
 
     return new EmailAddress(rawEmail);
