@@ -4,6 +4,7 @@ import databaseConfig from './config/db/database.config';
 import { validationSchema } from './config/validation/validation.schema';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/db/typeorm.config';
+import { IamModule } from './modules/iam/iam.module';
 
 @Module({
   imports: [
@@ -18,6 +19,8 @@ import { typeOrmConfig } from './config/db/typeorm.config';
       inject: [ConfigService],
       useFactory: typeOrmConfig,
     }),
+
+    IamModule,
   ],
   controllers: [],
   providers: [],

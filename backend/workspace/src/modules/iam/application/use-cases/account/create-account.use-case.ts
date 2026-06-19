@@ -6,6 +6,7 @@ import { AbstractHashPassword } from '../../ports/hash-password.abstract';
 import { PasswordHash } from 'src/modules/iam/domain/value-objects/password-hash.vo';
 import { AccountId } from 'src/modules/iam/domain/value-objects/account-id.vo';
 import { v4 as uuidV4 } from 'uuid';
+import { EmailAlreadyExistsException } from '../../exceptions/duplicate-email.exception';
 
 export class CreateAccountUseCase {
   private _accountRepo: AbstractAccountRepository;
@@ -27,7 +28,7 @@ export class CreateAccountUseCase {
     const accountExist = await this._accountRepo.findByEmail(emailVO);
 
     if (accountExist) {
-      throw new Error('An account with this email address already exists');
+      throw new EmailAlreadyExistsException(email);
     }
 
     const hashPWD = await this._HashPassword.hash(password);

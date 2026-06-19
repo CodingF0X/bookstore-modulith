@@ -1,3 +1,5 @@
+import { InvalidPasswordException } from '../exceptions/invalid-password.exception';
+
 export class PasswordHash {
   private readonly value: string;
 
@@ -7,7 +9,7 @@ export class PasswordHash {
 
   public static create(hash: string): PasswordHash {
     if (!hash || hash.trim() == '') {
-      throw new Error('Password hash cannot be empty!');
+      throw new InvalidPasswordException();
     }
 
     return new PasswordHash(hash);
