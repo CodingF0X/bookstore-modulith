@@ -13,6 +13,6 @@ export class CreateAccountResDTO {
     this.email = account.email.getValue;
     this.isActive = account.isActive;
     this.lastLogin = account.lastLogin;
-    this.role = account.role as unknown as readonly Role[];
+    this.role = account.role.map((r) => r.roleName);
   }
 }

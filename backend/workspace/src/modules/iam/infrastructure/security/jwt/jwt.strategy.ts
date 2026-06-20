@@ -25,21 +25,17 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: JwtPayload): Promise<Account> {
-    const lookup = payload.email ?? payload.email;
-    if (!lookup) {
+    const email = payload.email;
+    if (!email) {
       throw new UnauthorizedException('Invalid token');
     }
 
-    try {
-      const emailVO = EmailAddress.create(lookup);
-      const user = await this.accountRepository.findByEmail(emailVO);
-      if (!user) {
-        throw new UnauthorizedException('Invalid credentials');
-      }
-
-      return user;
-    } catch {
+    const emailVO = EmailAddress.create(email);
+    const user = await this.accountRepository.findByEmail(emailVO);
+    if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
+
+    return user;
   }
 }

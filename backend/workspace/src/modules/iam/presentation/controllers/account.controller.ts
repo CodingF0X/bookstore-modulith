@@ -4,7 +4,7 @@ import { CreateAccountReqDTO } from '../DTO/req/create-account.req-dto';
 import { CreateAccountResDTO } from '../DTO/res/create-account.res-dto';
 
 @Controller('auth')
-export class ControllersController {
+export class AccountController {
   constructor(private readonly createAccountUseCase: CreateAccountUseCase) {}
 
   @Post('register')

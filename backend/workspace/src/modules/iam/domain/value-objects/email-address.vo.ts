@@ -14,7 +14,7 @@ export class EmailAddress {
       throw new InvalidEmailException();
     }
 
-    return new EmailAddress(rawEmail);
+    return new EmailAddress(normalizeEmail);
   }
 
   private static isValid(email: string): boolean {
