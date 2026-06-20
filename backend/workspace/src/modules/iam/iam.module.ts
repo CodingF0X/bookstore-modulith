@@ -14,6 +14,8 @@ import { UseCaseProviders } from './account.providers';
 import { AuthController } from './presentation/controllers/account.controller';
 import { AbstractTokenGenerator } from './application/ports/token-generate.abstract';
 import { JwtTokenGenerator } from './infrastructure/security/jwt-token.generator';
+import { AbstractPinoLogger } from './application/ports/logger.abstract';
+import { PinoLoggerAdapter } from './infrastructure/logging/pino-logger';
 
 @Module({
   imports: [
@@ -34,6 +36,7 @@ import { JwtTokenGenerator } from './infrastructure/security/jwt-token.generator
     { provide: AbstractAccountRepository, useClass: PostgresAccountRepository },
     { provide: AbstractHashPassword, useClass: PasswordHashing },
     { provide: AbstractTokenGenerator, useClass: JwtTokenGenerator },
+    { provide: AbstractPinoLogger, useClass: PinoLoggerAdapter },
 
     ...UseCaseProviders,
   ],

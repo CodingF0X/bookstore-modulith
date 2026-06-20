@@ -5,6 +5,7 @@ import { validationSchema } from './config/validation/validation.schema';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/db/typeorm.config';
 import { IamModule } from './modules/iam/iam.module';
+import { LoggerConfigModule } from './config/logger/logger-config.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { IamModule } from './modules/iam/iam.module';
       useFactory: typeOrmConfig,
     }),
 
+    LoggerConfigModule,
     IamModule,
   ],
   controllers: [],

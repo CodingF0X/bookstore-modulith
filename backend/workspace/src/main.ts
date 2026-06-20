@@ -2,6 +2,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { DomainExceptionFilter } from './modules/iam/presentation/filters/domain.exception-filter';
+import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -14,7 +15,7 @@ async function bootstrap() {
     }),
   );
 
-  // app.useLogger(app.get(Logger));
+  app.useLogger(app.get(Logger));
 
   app.useGlobalFilters(new DomainExceptionFilter());
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));

@@ -7,17 +7,21 @@ import { PasswordHash } from 'src/modules/iam/domain/value-objects/password-hash
 import { AccountId } from 'src/modules/iam/domain/value-objects/account-id.vo';
 import { v4 as uuidV4 } from 'uuid';
 import { EmailAlreadyExistsException } from '../../exceptions/duplicate-email.exception';
+import { AbstractPinoLogger } from '../../ports/logger.abstract';
 
 export class CreateAccountUseCase {
   private _accountRepo: AbstractAccountRepository;
   private _HashPassword: AbstractHashPassword;
+  private _loggerPort: AbstractPinoLogger;
 
   constructor(
     accountRepo: AbstractAccountRepository,
     hashPassword: AbstractHashPassword,
+    loggerport: AbstractPinoLogger,
   ) {
     this._accountRepo = accountRepo;
     this._HashPassword = hashPassword;
+    this._loggerPort = loggerport;
   }
 
   async execute(body: ICreateAccount): Promise<Account> {
@@ -44,6 +48,10 @@ export class CreateAccountUseCase {
 
     await this._accountRepo.save(newAccount);
 
+    this._loggerPort.log(
+      `User with email ${newAccount.email.getValue} was successfully registered.`,
+      'CreateAccountUseCase',
+    );
     return newAccount;
   }
 }

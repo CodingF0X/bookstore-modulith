@@ -4,12 +4,14 @@ import { AbstractTokenGenerator } from '../../ports/token-generate.abstract';
 import { ILoginDTO } from '../../DTOs/login.dto';
 import { EmailAddress } from 'src/modules/iam/domain/value-objects/email-address.vo';
 import { InvalidLoginCredentials } from '../../exceptions/invalid-login-credentials.exception';
+import { AbstractPinoLogger } from '../../ports/logger.abstract';
 
 export class LoginUseCase {
   constructor(
     private readonly accountRepo: AbstractAccountRepository,
     private readonly passwordHash: AbstractHashPassword,
     private readonly tokenGenerator: AbstractTokenGenerator,
+    private readonly loggerPort: AbstractPinoLogger,
   ) {}
 
   async execute(body: ILoginDTO): Promise<{ accessToken: string }> {
@@ -36,6 +38,10 @@ export class LoginUseCase {
       accountExist.id.getValue,
       accountExist.email.getValue,
       roles,
+    );
+
+    this.loggerPort.log(
+      `User with email ${accountExist.email.getValue} has succesfully logged in.`,
     );
 
     return { accessToken };
