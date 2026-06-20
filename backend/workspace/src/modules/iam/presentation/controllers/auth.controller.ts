@@ -7,7 +7,9 @@ import { LoginReqDTO } from '../DTO/req/login-request.dto';
 import { LoginResDTO } from '../DTO/res/login-response.dto';
 import { SwaggerLoginDocs } from '../decorators/login-swagger.decorator';
 import { SwaggerRegisterDocs } from '../decorators/register-swagger.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(
