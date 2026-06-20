@@ -5,7 +5,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { JwtPayload } from './jwt-payload';
 import { AbstractAccountRepository } from 'src/modules/iam/domain/repositories/account.abstract-repository';
 import { Account } from 'src/modules/iam/domain/aggregates/account.aggregate-root';
-import { EmailAddress } from 'src/modules/iam/domain/value-objects/email-address.vo';
+import { AccountId } from 'src/modules/iam/domain/value-objects/account-id.vo';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -25,15 +25,23 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: JwtPayload): Promise<Account> {
-    const email = payload.email;
-    if (!email) {
-      throw new UnauthorizedException('Invalid token');
+    /* 
+    Querying a database by a Primary Key (id) is always faster than querying by a secondary unique column (email). 
+    Since the JWT payload contains the sub as accountId, we should use it instead of the email.
+    */
+
+    const accountId = payload.sub;
+    if (!accountId) {
+      throw new UnauthorizedException('Invalid token structure');
     }
 
-    const emailVO = EmailAddress.create(email);
-    const user = await this.accountRepository.findByEmail(emailVO);
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+    const accountIdVO = AccountId.create(accountId);
+    const user = await this.accountRepository.findById(accountIdVO);
+
+    if (!user || !user.isActive) {
+      throw new UnauthorizedException(
+        'Invalid credentials or account is deactivated.',
+      );
     }
 
     return user;

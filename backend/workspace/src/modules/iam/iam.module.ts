@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ControllersController } from './presentation/controllers/account.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrmAccountEntity } from './infrastructure/entities/account.entity';
 import { OrmRoleEntity } from './infrastructure/entities/role.entity';
@@ -12,6 +11,9 @@ import { PostgresAccountRepository } from './infrastructure/repositories/postgre
 import { AbstractHashPassword } from './application/ports/hash-password.abstract';
 import { PasswordHashing } from './infrastructure/security/bcrypt.hash';
 import { UseCaseProviders } from './account.providers';
+import { AuthController } from './presentation/controllers/account.controller';
+import { AbstractTokenGenerator } from './application/ports/token-generate.abstract';
+import { JwtTokenGenerator } from './infrastructure/security/jwt-token.generator';
 
 @Module({
   imports: [
@@ -31,9 +33,10 @@ import { UseCaseProviders } from './account.providers';
 
     { provide: AbstractAccountRepository, useClass: PostgresAccountRepository },
     { provide: AbstractHashPassword, useClass: PasswordHashing },
+    { provide: AbstractTokenGenerator, useClass: JwtTokenGenerator },
 
     ...UseCaseProviders,
   ],
-  controllers: [ControllersController],
+  controllers: [AuthController],
 })
 export class IamModule {}

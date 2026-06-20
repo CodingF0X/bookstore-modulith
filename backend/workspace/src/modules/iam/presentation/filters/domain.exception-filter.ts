@@ -9,6 +9,7 @@ import { Response } from 'express';
 import { DomainException } from '../../domain/exceptions/domain.exception';
 import { InvalidEmailException } from '../../domain/exceptions/invalid-email.exception';
 import { EmailAlreadyExistsException } from '../../application/exceptions/duplicate-email.exception';
+import { InvalidLoginCredentials } from '../../application/exceptions/invalid-login-credentials.exception';
 
 // This decorator tells NestJS to only catch our pure Domain Exceptions
 @Catch(DomainException)
@@ -19,6 +20,7 @@ export class DomainExceptionFilter implements ExceptionFilter {
   >([
     [InvalidEmailException, HttpStatus.BAD_REQUEST],
     [EmailAlreadyExistsException, HttpStatus.CONFLICT],
+    [InvalidLoginCredentials, HttpStatus.BAD_REQUEST],
   ]);
 
   catch(exception: DomainException, host: ArgumentsHost) {
