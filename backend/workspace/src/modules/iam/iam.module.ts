@@ -11,7 +11,7 @@ import { PostgresAccountRepository } from './infrastructure/repositories/postgre
 import { AbstractHashPassword } from './application/ports/hash-password.abstract';
 import { PasswordHashing } from './infrastructure/security/bcrypt.hash';
 import { UseCaseProviders } from './account.providers';
-import { AuthController } from './presentation/controllers/account.controller';
+import { AuthController } from './presentation/controllers/auth.controller';
 import { AbstractTokenGenerator } from './application/ports/token-generate.abstract';
 import { JwtTokenGenerator } from './infrastructure/security/jwt-token.generator';
 import { AbstractPinoLogger } from './application/ports/logger.abstract';

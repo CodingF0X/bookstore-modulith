@@ -1,11 +1,3 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { CreateAccountReqDTO } from './create-account.req-dto';
 
-export class LoginReqDTO {
-  @IsString()
-  @IsNotEmpty()
-  email!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  password!: string;
-}
+export class LoginReqDTO extends CreateAccountReqDTO {}
