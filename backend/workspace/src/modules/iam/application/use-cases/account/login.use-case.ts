@@ -30,7 +30,8 @@ export class LoginUseCase {
 
     if (!passwordValid) throw new InvalidLoginCredentials();
 
-    // accountExist.updateLastLogin();
+    accountExist.updateLastLogin();
+    await this.accountRepo.save(accountExist);
 
     const roles = accountExist.role.map((r) => r.roleName);
 

@@ -63,6 +63,10 @@ export class Account {
     }
   }
 
+  public updateLastLogin(): void {
+    this._lastLogin = new Date();
+  }
+
   get id(): AccountId {
     return this._id;
   }
