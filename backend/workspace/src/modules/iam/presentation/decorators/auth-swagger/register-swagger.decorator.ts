@@ -5,8 +5,8 @@ import {
   ApiOperation,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
-import { CreateAccountReqDTO } from '../DTO/req/create-account.req-dto';
-import { CreateAccountResDTO } from '../DTO/res/create-account.res-dto';
+import { CreateAccountReqDTO } from '../../DTO/req/create-account.req-dto';
+import { CreateAccountResDTO } from '../../DTO/res/create-account.res-dto';
 
 export function SwaggerRegisterDocs(): MethodDecorator {
   return applyDecorators(

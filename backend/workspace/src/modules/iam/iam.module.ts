@@ -10,12 +10,14 @@ import { AbstractAccountRepository } from './domain/repositories/account.abstrac
 import { PostgresAccountRepository } from './infrastructure/repositories/postgres-account.repository';
 import { AbstractHashPassword } from './application/ports/hash-password.abstract';
 import { PasswordHashing } from './infrastructure/security/bcrypt.hash';
-import { UseCaseProviders } from './account.providers';
+import { AuthUseCaseProviders } from './auth.providers';
 import { AuthController } from './presentation/controllers/auth.controller';
 import { AbstractTokenGenerator } from './application/ports/token-generate.abstract';
 import { JwtTokenGenerator } from './infrastructure/security/jwt-token.generator';
 import { AbstractPinoLogger } from './application/ports/logger.abstract';
 import { PinoLoggerAdapter } from './infrastructure/logging/pino-logger';
+import { AccountUseCaseProviders } from './account.providers';
+import { UsersController } from './presentation/controllers/users.controller';
 
 @Module({
   imports: [
@@ -38,8 +40,9 @@ import { PinoLoggerAdapter } from './infrastructure/logging/pino-logger';
     { provide: AbstractTokenGenerator, useClass: JwtTokenGenerator },
     { provide: AbstractPinoLogger, useClass: PinoLoggerAdapter },
 
-    ...UseCaseProviders,
+    ...AuthUseCaseProviders,
+    ...AccountUseCaseProviders,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UsersController],
 })
 export class IamModule {}

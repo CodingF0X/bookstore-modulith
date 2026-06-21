@@ -1,56 +1,12 @@
 import { Provider } from '@nestjs/common';
-import { CreateAccountUseCase } from './application/use-cases/account/create-account.use-case';
+import { GetUserByIdUseCase } from './application/use-cases/account';
 import { AbstractAccountRepository } from './domain/repositories/account.abstract-repository';
-import { AbstractHashPassword } from './application/ports/hash-password.abstract';
-import { LoginUseCase } from './application/use-cases/account/login.use-case';
-import { AbstractTokenGenerator } from './application/ports/token-generate.abstract';
-import { AbstractPinoLogger } from './application/ports/logger.abstract';
-import { LogoutUseCase } from './application/use-cases/account/logout.use-case';
 
-export const UseCaseProviders: Provider[] = [
+export const AccountUseCaseProviders: Provider[] = [
   {
-    provide: CreateAccountUseCase,
-    useFactory: (
-      accountRepo: AbstractAccountRepository,
-      hashPassword: AbstractHashPassword,
-      pinoLogger: AbstractPinoLogger,
-    ) => {
-      return new CreateAccountUseCase(accountRepo, hashPassword, pinoLogger);
-    },
-    inject: [
-      AbstractAccountRepository,
-      AbstractHashPassword,
-      AbstractPinoLogger,
-    ],
-  },
-
-  {
-    provide: LoginUseCase,
-    useFactory: (
-      accountRepo: AbstractAccountRepository,
-      hashPassword: AbstractHashPassword,
-      tokenGenerator: AbstractTokenGenerator,
-      pinoLogger: AbstractPinoLogger,
-    ) => {
-      return new LoginUseCase(
-        accountRepo,
-        hashPassword,
-        tokenGenerator,
-        pinoLogger,
-      );
-    },
-    inject: [
-      AbstractAccountRepository,
-      AbstractHashPassword,
-      AbstractTokenGenerator,
-      AbstractPinoLogger,
-    ],
-  },
-
-  {
-    provide: LogoutUseCase,
+    provide: GetUserByIdUseCase,
     useFactory: (accountRepo: AbstractAccountRepository) => {
-      return new LogoutUseCase(accountRepo);
+      return new GetUserByIdUseCase(accountRepo);
     },
     inject: [AbstractAccountRepository],
   },

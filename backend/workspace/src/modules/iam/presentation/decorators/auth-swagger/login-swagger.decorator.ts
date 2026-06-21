@@ -6,8 +6,8 @@ import {
   ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
-import { LoginReqDTO } from '../DTO/req/login-request.dto';
-import { LoginResDTO } from '../DTO/res/login-response.dto';
+import { LoginReqDTO } from '../../DTO/req/login-request.dto';
+import { LoginResDTO } from '../../DTO/res/login-response.dto';
 
 export function SwaggerLoginDocs(): MethodDecorator {
   return applyDecorators(

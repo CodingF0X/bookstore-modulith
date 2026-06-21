@@ -6,20 +6,22 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CreateAccountUseCase } from '../../application/use-cases/account/create-account.use-case';
+import { CreateAccountUseCase } from '../../application/use-cases/auth/create-account.use-case';
 import { CreateAccountReqDTO } from '../DTO/req/create-account.req-dto';
 import { CreateAccountResDTO } from '../DTO/res/create-account.res-dto';
-import { LoginUseCase } from '../../application/use-cases/account/login.use-case';
+import { LoginUseCase } from '../../application/use-cases/auth/login.use-case';
 import { LoginReqDTO } from '../DTO/req/login-request.dto';
 import { LoginResDTO } from '../DTO/res/login-response.dto';
-import { SwaggerLoginDocs } from '../decorators/login-swagger.decorator';
-import { SwaggerRegisterDocs } from '../decorators/register-swagger.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { LogoutUseCase } from '../../application/use-cases/account/logout.use-case';
+import { LogoutUseCase } from '../../application/use-cases/auth/logout.use-case';
 import { GetUser } from '../../infrastructure/security/jwt/create-user.decorator';
 import { Account } from '../../domain/aggregates/account.aggregate-root';
 import { AuthGuard } from '@nestjs/passport';
-import { SwaggerLogoutDocs } from '../decorators/logout-swagger.decorator';
+import {
+  SwaggerLoginDocs,
+  SwaggerLogoutDocs,
+  SwaggerRegisterDocs,
+} from '../decorators/auth-swagger';
 
 @ApiTags('Auth')
 @Controller('auth')

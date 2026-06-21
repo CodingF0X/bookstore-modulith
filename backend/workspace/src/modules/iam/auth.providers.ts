@@ -1,0 +1,57 @@
+import { Provider } from '@nestjs/common';
+import { CreateAccountUseCase } from './application/use-cases/auth/create-account.use-case';
+import { AbstractAccountRepository } from './domain/repositories/account.abstract-repository';
+import { AbstractHashPassword } from './application/ports/hash-password.abstract';
+import { LoginUseCase } from './application/use-cases/auth/login.use-case';
+import { AbstractTokenGenerator } from './application/ports/token-generate.abstract';
+import { AbstractPinoLogger } from './application/ports/logger.abstract';
+import { LogoutUseCase } from './application/use-cases/auth/logout.use-case';
+
+export const AuthUseCaseProviders: Provider[] = [
+  {
+    provide: CreateAccountUseCase,
+    useFactory: (
+      accountRepo: AbstractAccountRepository,
+      hashPassword: AbstractHashPassword,
+      pinoLogger: AbstractPinoLogger,
+    ) => {
+      return new CreateAccountUseCase(accountRepo, hashPassword, pinoLogger);
+    },
+    inject: [
+      AbstractAccountRepository,
+      AbstractHashPassword,
+      AbstractPinoLogger,
+    ],
+  },
+
+  {
+    provide: LoginUseCase,
+    useFactory: (
+      accountRepo: AbstractAccountRepository,
+      hashPassword: AbstractHashPassword,
+      tokenGenerator: AbstractTokenGenerator,
+      pinoLogger: AbstractPinoLogger,
+    ) => {
+      return new LoginUseCase(
+        accountRepo,
+        hashPassword,
+        tokenGenerator,
+        pinoLogger,
+      );
+    },
+    inject: [
+      AbstractAccountRepository,
+      AbstractHashPassword,
+      AbstractTokenGenerator,
+      AbstractPinoLogger,
+    ],
+  },
+
+  {
+    provide: LogoutUseCase,
+    useFactory: (accountRepo: AbstractAccountRepository) => {
+      return new LogoutUseCase(accountRepo);
+    },
+    inject: [AbstractAccountRepository],
+  },
+];
