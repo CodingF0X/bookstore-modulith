@@ -42,7 +42,7 @@ export class Account {
     passwordHash: PasswordHash,
     isActive: boolean,
     lastLoginAt: Date | null,
-    roles: AccountRole[],
+    roles: readonly AccountRole[],
     tokenVersion: number,
   ): Account {
     const account = new Account();
@@ -51,7 +51,7 @@ export class Account {
     account._passwordHash = passwordHash;
     account._isActive = isActive;
     account._lastLogin = lastLoginAt;
-    account._roles = roles;
+    account._roles = [...roles];
     account._tokenVersion = tokenVersion;
 
     return account;

@@ -13,6 +13,17 @@ export class GetUserByIdUseCase {
 
     if (!accountExist) throw new UnauthorizedException();
 
-    return accountExist;
+    const { id, email, passwordHash, isActive, lastLogin, role, tokenVersion } =
+      accountExist;
+
+    return Account.loadExisting(
+      id,
+      email,
+      passwordHash,
+      isActive,
+      lastLogin,
+      role,
+      tokenVersion,
+    );
   }
 }
