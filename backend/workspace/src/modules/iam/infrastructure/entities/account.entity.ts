@@ -45,4 +45,7 @@ export class OrmAccountEntity {
     eager: true, // We want to load roles automatically for JWT generation})
   })
   roles!: OrmRoleEntity[];
+
+  @Column({ name: 'token_version', type: 'int', default: 0 })
+  tokenVersion!: number;
 }

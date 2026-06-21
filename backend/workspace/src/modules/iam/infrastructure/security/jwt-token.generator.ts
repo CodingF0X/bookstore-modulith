@@ -11,12 +11,14 @@ export class JwtTokenGenerator implements AbstractTokenGenerator {
     accountId: string,
     email: string,
     roles: string[],
+    tokenVersion: number,
   ): Promise<string> {
     // The payload is the data embedded inside the JWT
     const jwtPayload: JwtPayload = {
       sub: accountId,
       email: email,
       roles: roles,
+      tokenVersion: tokenVersion,
     };
 
     // generate the actual signed token

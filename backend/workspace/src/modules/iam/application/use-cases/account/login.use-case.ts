@@ -39,6 +39,7 @@ export class LoginUseCase {
       accountExist.id.getValue,
       accountExist.email.getValue,
       roles,
+      accountExist.tokenVersion,
     );
 
     this.loggerPort.log(

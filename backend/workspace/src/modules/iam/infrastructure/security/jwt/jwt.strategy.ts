@@ -44,6 +44,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       );
     }
 
+    if (payload.tokenVersion !== user?.tokenVersion)
+      throw new UnauthorizedException('Token has been revoked or is invalid.');
+
     return user;
   }
 }

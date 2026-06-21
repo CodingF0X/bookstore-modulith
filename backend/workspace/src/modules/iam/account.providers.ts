@@ -5,6 +5,7 @@ import { AbstractHashPassword } from './application/ports/hash-password.abstract
 import { LoginUseCase } from './application/use-cases/account/login.use-case';
 import { AbstractTokenGenerator } from './application/ports/token-generate.abstract';
 import { AbstractPinoLogger } from './application/ports/logger.abstract';
+import { LogoutUseCase } from './application/use-cases/account/logout.use-case';
 
 export const UseCaseProviders: Provider[] = [
   {
@@ -44,5 +45,13 @@ export const UseCaseProviders: Provider[] = [
       AbstractTokenGenerator,
       AbstractPinoLogger,
     ],
+  },
+
+  {
+    provide: LogoutUseCase,
+    useFactory: (accountRepo: AbstractAccountRepository) => {
+      return new LogoutUseCase(accountRepo);
+    },
+    inject: [AbstractAccountRepository],
   },
 ];

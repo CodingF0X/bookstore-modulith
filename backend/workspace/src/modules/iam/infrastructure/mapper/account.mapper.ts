@@ -23,6 +23,7 @@ export class AccountMapper {
       orm.is_active,
       orm.last_login_at,
       roles,
+      orm.tokenVersion,
     );
   }
 
@@ -37,6 +38,7 @@ export class AccountMapper {
     // 2. Extract standard properties
     ormEntity.is_active = domain.isActive;
     ormEntity.last_login_at = domain.lastLogin;
+    ormEntity.tokenVersion = domain.tokenVersion;
 
     // 3. Map Child Entities to ORM Entities
 
