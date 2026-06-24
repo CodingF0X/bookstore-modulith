@@ -1,21 +1,20 @@
 import { Account } from 'src/modules/iam/domain/aggregates/account.aggregate-root';
 import { AbstractAccountRepository } from 'src/modules/iam/domain/repositories/account.abstract-repository';
-import { AccountId } from 'src/modules/iam/domain/value-objects/account-id.vo';
-import { UnauthorizedException } from '../../exceptions/unauthorized.exception';
+import { EmailAddress } from 'src/modules/iam/domain/value-objects/email-address.vo';
 import { NotFoundAccountException } from '../../exceptions/not-found-account.exception';
 
-export class GetUserByIdUseCase {
+export class GetUserByEmailUseCase {
   constructor(private readonly accountRepo: AbstractAccountRepository) {}
 
-  async excecute(accountId: string): Promise<Account> {
-    const accountIdVO = AccountId.create(accountId);
+  async execute(body: string): Promise<Account> {
+    const emailVO = EmailAddress.create(body);
 
-    const accountExist = await this.accountRepo.findById(accountIdVO);
+    const accountExists = await this.accountRepo.findByEmail(emailVO);
 
-    if (!accountExist) throw new NotFoundAccountException();
+    if (!accountExists) throw new NotFoundAccountException();
 
     const { id, email, passwordHash, isActive, lastLogin, role, tokenVersion } =
-      accountExist;
+      accountExists;
 
     return Account.loadExisting(
       id,

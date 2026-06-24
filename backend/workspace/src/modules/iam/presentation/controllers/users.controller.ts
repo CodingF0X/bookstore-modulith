@@ -1,27 +1,46 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { GetUserByIdUseCase } from '../../application/use-cases/account';
-import { GetUserbyIdResDTO } from '../DTO/res';
+import {
+  GetUserByEmailUseCase,
+  GetUserByIdUseCase,
+} from '../../application/use-cases/account';
+import { GetUserByIdentifierResDTO } from '../DTO/res';
 import { ApiTags } from '@nestjs/swagger';
-import { SwaggergetUserByIdDocs } from '../decorators/users-swagger';
+import {
+  SwaggerGetAllUsersDocs,
+  SwaggerGetUserByEmailDocs,
+  SwaggergetUserByIdDocs,
+} from '../decorators/users-swagger';
 import { PaginationReqDTO } from '../DTO/req/pagination.req-dto';
 import { AbstractAccountsQuery } from '../../application/queries/get-accounts';
 import { PaginatedAccountsResponseDto } from '../DTO/res/paginated-accounts.res-dto';
-import { SwaggerGetAllUsersDocs } from '../decorators/users-swagger/get-all-users-swagger.decorator';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly getUserByIdUseCase: GetUserByIdUseCase,
+    private readonly getUSerByEmailUseCase: GetUserByEmailUseCase,
     private readonly getAccountsQuery: AbstractAccountsQuery,
   ) {}
 
   @Get('/id/:id')
   @SwaggergetUserByIdDocs()
-  async getUserbyId(@Param('id') id: string): Promise<GetUserbyIdResDTO> {
+  async getUserbyId(
+    @Param('id') id: string,
+  ): Promise<GetUserByIdentifierResDTO> {
     const account = await this.getUserByIdUseCase.excecute(id);
 
-    return new GetUserbyIdResDTO(account);
+    return new GetUserByIdentifierResDTO(account);
+  }
+
+  @Get('/email/:email')
+  @SwaggerGetUserByEmailDocs()
+  async GetUserByEmail(
+    @Param('email') email: string,
+  ): Promise<GetUserByIdentifierResDTO> {
+    const account = await this.getUSerByEmailUseCase.execute(email);
+
+    return new GetUserByIdentifierResDTO(account);
   }
 
   @Get()

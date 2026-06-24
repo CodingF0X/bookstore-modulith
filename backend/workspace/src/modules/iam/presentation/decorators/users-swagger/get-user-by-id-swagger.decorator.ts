@@ -5,7 +5,7 @@ import {
   ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
-import { GetUserbyIdResDTO } from '../../DTO/res';
+import { GetUserByIdentifierResDTO } from '../../DTO/res';
 
 export function SwaggergetUserByIdDocs(): MethodDecorator {
   return applyDecorators(
@@ -15,7 +15,7 @@ export function SwaggergetUserByIdDocs(): MethodDecorator {
     }),
     ApiOkResponse({
       description: 'Successfully fetched the User details',
-      type: GetUserbyIdResDTO,
+      type: GetUserByIdentifierResDTO,
     }),
     ApiUnprocessableEntityResponse({
       description: 'Validation failed (e.g., invalid Id format).',

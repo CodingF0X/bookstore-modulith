@@ -5,21 +5,20 @@ import {
   ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
-import { SingleAccountResDTO } from '../../DTO/res/query-single-account.res-dto';
+import { GetUserByIdentifierResDTO } from '../../DTO/res';
 
-export function SwaggerGetAllUsersDocs(): MethodDecorator {
+export function SwaggerGetUserByEmailDocs(): MethodDecorator {
   return applyDecorators(
     ApiOperation({
-      summary: 'Get many user',
-      description:
-        'Get users based on total number and limit of requested columns',
+      summary: 'Get a single user',
+      description: 'Get a single user by Email',
     }),
     ApiOkResponse({
       description: 'Successfully fetched the User details',
-      type: [SingleAccountResDTO],
+      type: GetUserByIdentifierResDTO,
     }),
     ApiUnprocessableEntityResponse({
-      description: 'Users do not exist.',
+      description: 'Validation failed (e.g., invalid email format).',
     }),
     ApiUnauthorizedResponse({
       description:

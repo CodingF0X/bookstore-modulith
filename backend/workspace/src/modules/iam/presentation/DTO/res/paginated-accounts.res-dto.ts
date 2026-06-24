@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { singleAccountResDTO } from './query-single-account.res-dto';
+import { SingleAccountResDTO } from './query-single-account.res-dto';
 
 export class PaginatedAccountsResponseDto {
   @ApiProperty({
     description: 'The array of accounts for the current page.',
-    type: [singleAccountResDTO],
+    type: [SingleAccountResDTO],
   })
-  data!: singleAccountResDTO[];
+  data!: SingleAccountResDTO[];
 
   @ApiProperty({
     description: 'The total number of accounts in the entire database.',

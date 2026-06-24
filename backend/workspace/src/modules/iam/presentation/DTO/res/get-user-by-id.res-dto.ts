@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Account } from 'src/modules/iam/domain/aggregates/account.aggregate-root';
 import { Role } from 'src/modules/iam/domain/value-objects/role.enum';
 
-export class GetUserbyIdResDTO {
+export class GetUserByIdentifierResDTO {
   @ApiProperty({ description: 'The account ID' })
   public readonly accountId!: string;
 

@@ -10,7 +10,7 @@ import {
 import { OrmAccountEntity } from '../entities/account.entity';
 
 @Injectable()
-export class GetAccountsQuery implements AbstractAccountsQuery {
+export class PostgresGetAccountsQuery implements AbstractAccountsQuery {
   constructor(
     @InjectRepository(OrmAccountEntity)
     private readonly _typeOrmRepo: Repository<OrmAccountEntity>,
