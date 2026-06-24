@@ -18,6 +18,8 @@ import { AbstractPinoLogger } from './application/ports/logger.abstract';
 import { PinoLoggerAdapter } from './infrastructure/logging/pino-logger';
 import { AccountUseCaseProviders } from './account.providers';
 import { UsersController } from './presentation/controllers/users.controller';
+import { AbstractAccountsQuery } from './application/queries/get-accounts';
+import { GetAccountsQuery } from './infrastructure/repositories/postgres-get-accounts.query';
 
 @Module({
   imports: [
@@ -39,6 +41,7 @@ import { UsersController } from './presentation/controllers/users.controller';
     { provide: AbstractHashPassword, useClass: PasswordHashing },
     { provide: AbstractTokenGenerator, useClass: JwtTokenGenerator },
     { provide: AbstractPinoLogger, useClass: PinoLoggerAdapter },
+    { provide: AbstractAccountsQuery, useClass: GetAccountsQuery },
 
     ...AuthUseCaseProviders,
     ...AccountUseCaseProviders,

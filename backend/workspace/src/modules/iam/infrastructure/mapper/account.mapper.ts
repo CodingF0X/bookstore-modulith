@@ -10,7 +10,7 @@ export class AccountMapper {
   public static toDomain(orm: OrmAccountEntity) {
     const accountIdVO = AccountId.create(orm.id);
     const emailVO = EmailAddress.create(orm.email);
-    const passwordVO = PasswordHash.create(orm.password_hash);
+    const passwordVO = PasswordHash.create(orm.passwordHash);
 
     const roles = orm.roles
       ? orm.roles.map((r) => new AccountRole(r.roleName, r.grantedAt))
@@ -20,8 +20,8 @@ export class AccountMapper {
       accountIdVO,
       emailVO,
       passwordVO,
-      orm.is_active,
-      orm.last_login_at,
+      orm.isActive,
+      orm.lastLoginAt,
       roles,
       orm.tokenVersion,
     );
@@ -33,11 +33,11 @@ export class AccountMapper {
     // 1. Extract raw primitives from the Value Objects
     ormEntity.id = domain.id.getValue;
     ormEntity.email = domain.email.getValue;
-    ormEntity.password_hash = domain.passwordHash.getValue;
+    ormEntity.passwordHash = domain.passwordHash.getValue;
 
     // 2. Extract standard properties
-    ormEntity.is_active = domain.isActive;
-    ormEntity.last_login_at = domain.lastLogin;
+    ormEntity.isActive = domain.isActive;
+    ormEntity.lastLoginAt = domain.lastLogin;
     ormEntity.tokenVersion = domain.tokenVersion;
 
     // 3. Map Child Entities to ORM Entities
