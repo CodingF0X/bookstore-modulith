@@ -24,19 +24,19 @@ export class OrmAccountEntity {
     length: 255,
     nullable: false,
   })
-  password_hash!: string;
+  passwordHash!: string;
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
-  is_active!: boolean;
+  isActive!: boolean;
 
   @Column({ name: 'last_login_at', type: 'timestamptz', nullable: true })
-  last_login_at!: Date | null;
+  lastLoginAt!: Date | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  created_at!: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
-  updated_at!: Date;
+  updatedAt!: Date;
 
   // cascade: true allows us to save the Account and all its new roles/tokens
   // in a single repository.save() call.
